@@ -96,10 +96,10 @@ INSERT INTO Store VALUES
 -- Employees
 INSERT INTO Employees VALUES 
 (101, 'John', 'Doe', '123 Main St', 1, 45000, '2022-01-15'),
-(102, 'Jane', 'Smith', '456 Oak Ave', 1, 47000, '2022-02-20'),
-(103, 'Alice', 'Brown', '789 Pine Rd', 2, 46000, '2022-03-10'),
-(104, 'Bob', 'White', '321 Maple Dr', 3, 48000, '2022-04-25'),
-(105, 'Carol', 'Davis', '654 Birch Ln', 4, 49000, '2022-05-30');
+(102, 'Jane', 'Smith', '456 Oak Ave', 2, 47000, '2022-02-20'),
+(103, 'Alice', 'Brown', '789 Pine Rd', 3, 46000, '2022-03-10'),
+(104, 'Bob', 'White', '321 Maple Dr', 4, 48000, '2022-04-25'),
+(105, 'Carol', 'Davis', '654 Birch Ln', 5, 49000, '2022-05-30');
 
 -- Customers
 INSERT INTO Customers VALUES 
