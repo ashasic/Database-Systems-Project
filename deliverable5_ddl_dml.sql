@@ -9,29 +9,31 @@ CREATE TABLE Store (
 -- Employees table
 CREATE TABLE Employees (
     EmployeeNum INT PRIMARY KEY,
-    FirstName VARCHAR(50),
-    LastName VARCHAR(50),
+    FirstName VARCHAR(50) NOT NULL,
+    LastName VARCHAR(50) NOT NULL,
     Address VARCHAR(100),
     StoreID INT,
-    Salary DECIMAL(10, 2),
+    Salary DECIMAL(10, 2) NOT NULL CHECK (Salary >= 0),
     StartDate DATE,
     FOREIGN KEY (StoreID) REFERENCES Store(StoreID)
+		ON DELETE SET NULL
+        ON UPDATE CASCADE
 );
 
 -- Customers table
 CREATE TABLE Customers (
     CustomerNum INT PRIMARY KEY,
-    FirstName VARCHAR(50),
-    LastName VARCHAR(50),
+    FirstName VARCHAR(50) NOT NULL,
+    LastName VARCHAR(50) NOT NULL,
     DateJoined DATE,
-    MembershipStatus VARCHAR(20)
+    MembershipStatus VARCHAR(20) DEFAULT 'Active'
 );
 
 -- Products table
 CREATE TABLE Products (
     ItemNum INT PRIMARY KEY,
-    ItemName VARCHAR(100),
-    QuantityInStock INT,
+    ItemName VARCHAR(100) UNIQUE,
+    QuantityInStock INT DEFAULT 0 CHECK (QuantityInStock >= 0),
     CostPerUnit DECIMAL(5, 2),
     PricePerUnit DECIMAL(5, 2),
     ItemType VARCHAR(50),
@@ -41,8 +43,8 @@ CREATE TABLE Products (
 -- Suppliers table
 CREATE TABLE Suppliers (
     SupplierID INT PRIMARY KEY,
-    ContactName VARCHAR(100),
-    Phone BIGINT
+    ContactName VARCHAR(100) NOT NULL,
+    Phone BIGINT UNIQUE
 );
 
 -- Orders table
@@ -50,7 +52,7 @@ CREATE TABLE Orders (
     OrderID INT PRIMARY KEY,
     DateSold DATE,
     SaleAMT DECIMAL(10, 2),
-    Location VARCHAR(100),
+    Location VARCHAR(100) NOT NULL,
     CustomerNum INT,
     FOREIGN KEY (CustomerNum) REFERENCES Customers(CustomerNum)
 );
@@ -59,8 +61,8 @@ CREATE TABLE Orders (
 CREATE TABLE OrderDetails (
     OrderID INT,
     ItemNum INT,
-    Quantity INT,
-    PricePerUnit DECIMAL(5, 2),
+    Quantity INT NOT NULL CHECK (Quantity >0),
+    PricePerUnit DECIMAL(5, 2) NOT NULL CHECK (PricePerUnit >0),
     PRIMARY KEY (OrderID, ItemNum),
     FOREIGN KEY (OrderID) REFERENCES Orders(OrderID),
     FOREIGN KEY (ItemNum) REFERENCES Products(ItemNum)
@@ -83,7 +85,7 @@ CREATE TABLE Shipments (
 CREATE TABLE ShipmentDetails (
     StoreOrderID INT,
     ItemNum INT,
-    Quantity INT,
+    Quantity INT CHECK (Quantity>0),
     CostPerUnit DECIMAL(5, 2),
     PRIMARY KEY (StoreOrderID, ItemNum),
     FOREIGN KEY (StoreOrderID) REFERENCES Shipments(StoreOrderID),
