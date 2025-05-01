@@ -26,7 +26,7 @@ CREATE TABLE Customers (
     FirstName VARCHAR(50) NOT NULL,
     LastName VARCHAR(50) NOT NULL,
     DateJoined DATE,
-    MembershipStatus VARCHAR(20) DEFAULT 'Active'
+    MembershipStatus VARCHAR(20)
 );
 
 -- Products table
@@ -195,7 +195,8 @@ VALUES
 INSERT INTO Products (ItemNum, ItemName, QuantityInStock, CostPerUnit, PricePerUnit, ItemType, InStoreLocation)
 VALUES
   (104, 'Thingamajig', 40, 2.50, 5.00, 'Gadget',    'A3'),
-  (105, 'Whatsit',     15, 1.00, 2.50, 'Accessory','B2');
+  (105, 'Whatsit',     15, 1.00, 2.50, 'Accessory','B2'),
+  (900, 'button',     5, 1.00, 2.50, 'Thing','B2');
 
 INSERT INTO Orders (OrderID, DateSold, SaleAMT, Location, CustomerNum)
 VALUES

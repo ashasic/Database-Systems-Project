@@ -150,6 +150,8 @@ BEGIN
 END $$
 DELIMITER ;
 
+-- CALL GetCustomerOrders(2);
+
 -- Procedure 2: Show Products that Need Restocking
 DELIMITER $$
 CREATE PROCEDURE ShowLowStockProducts()
@@ -163,3 +165,5 @@ BEGIN
     ORDER BY QuantityInStock ASC;
 END $$
 DELIMITER ;
+
+-- CALL ShowLowStockProducts();
