@@ -3,6 +3,7 @@ from .config import get_db_connection
 
 def create_app():
     app = Flask(__name__)
+    app.secret_key = '12345'
 
     @app.route("/health")
     def health():

@@ -1,16 +1,31 @@
-<!-- templates/index.html -->
-<!doctype html>
-<html>
-  <head>
-    <meta charset="utf-8">
-    <title>Dashboard</title>
-  </head>
-  <body>
-    <h1>Query Dashboard</h1>
-    <ul>
-      <li><a href="/orders">Orders – Customer &amp; Sale Amount</a></li>
-      <li><a href="/store-sales">Store Sales Summary</a></li>
-      <li><a href="/frequent-products">Frequently Ordered Products</a></li>
-    </ul>
-  </body>
-</html>
+{% extends "base.html" %}
+{% block title %}Grocery Order System{% endblock %}
+
+{% block content %}
+<div class="text-center mt-5">
+    <h1 class="display-4 mb-3">Welcome to the Grocery Ordering Dashboard</h1>
+    <p class="lead mb-4">
+        Manage customers, track store performance, and place product orders with ease. 
+        Use the tools below to explore sales, frequent purchases, or start a new customer order.
+    </p>
+
+    <div class="my-5">
+        <img src="{{ url_for('static', filename='placeholder.png') }}" alt="Grocery Placeholder" class="img-fluid" style="max-height: 350px;">
+    </div>
+
+    <div class="d-flex flex-wrap justify-content-center gap-3 mt-4">
+        <a href="{{ url_for('order') }}" class="btn btn-success btn-lg px-4 py-2">
+            ➕ Start New Order
+        </a>
+        <a href="{{ url_for('orders') }}" class="btn btn-outline-primary btn-lg px-4 py-2">
+            📦 View Orders
+        </a>
+        <a href="{{ url_for('store_sales') }}" class="btn btn-outline-secondary btn-lg px-4 py-2">
+            🏪 Store Sales
+        </a>
+        <a href="{{ url_for('frequent_products') }}" class="btn btn-outline-info btn-lg px-4 py-2">
+            ⭐ Frequent Products
+        </a>
+    </div>
+</div>
+{% endblock %}

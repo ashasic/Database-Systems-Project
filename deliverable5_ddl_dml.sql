@@ -214,3 +214,17 @@ VALUES
   (4, 104, 2, 5.00),   -- Thingamajig
   (5, 103, 2, 3.50),   -- Doohickey
   (5, 101, 1, 4.00);   -- Widget
+  
+
+ALTER TABLE Orders MODIFY OrderID INT NOT NULL AUTO_INCREMENT;
+
+
+ALTER TABLE OrderDetails DROP FOREIGN KEY orderdetails_ibfk_1;
+
+
+ALTER TABLE Orders MODIFY OrderID INT NOT NULL AUTO_INCREMENT;
+
+
+ALTER TABLE OrderDetails
+  ADD CONSTRAINT orderdetails_ibfk_1
+  FOREIGN KEY (OrderID) REFERENCES Orders(OrderID);

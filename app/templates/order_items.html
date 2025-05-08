@@ -1,0 +1,100 @@
+{% extends "base.html" %}
+{% block title %}Order Management{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-lg-8">
+        {% if not order_id %}
+        <form method="POST" class="card card-body mb-4">
+            <h4 class="mb-3">Start a New Order</h4>
+            <div class="mb-3">
+                <label class="form-label">Select Customer</label>
+                <select name="customer_id" class="form-select" required>
+                    <option value="" disabled selected>Choose customer</option>
+                    {% for c in customers %}
+                    <option value="{{ c.CustomerNum }}">{{ c.FirstName }} {{ c.LastName }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="mb-3">
+                <label class="form-label">Store Location</label>
+                <select name="location" class="form-select" required>
+                    <option value="" disabled selected>Select a location</option>
+                    {% for loc in locations %}
+                    <option value="{{ loc }}">{{ loc }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <button type="submit" class="btn btn-success">Create Order</button>
+        </form>
+        {% endif %}
+
+        {% if order_id %}
+        <form method="GET" class="mb-4">
+            <input type="text" name="search" class="form-control" placeholder="Search for a product..." value="{{ request.args.get('search', '') }}">
+        </form>
+
+        <h4 class="mb-3">Most Purchased Products</h4>
+
+        <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
+            {% for product in products %}
+            <div class="col">
+                <div class="card shadow-sm" style="min-height: 250px;">
+                    <div class="card-body d-flex flex-column justify-content-between">
+                        <div>
+                            <h5 class="card-title">{{ product.ItemName }}</h5>
+                            <p class="card-text">Price: ${{ product.PricePerUnit }}</p>
+                        </div>
+                        <form method="POST" action="{{ url_for('add_item', order_id=order_id) }}">
+                            <input type="hidden" name="item_num" value="{{ product.ItemNum }}">
+                            <div class="mb-2">
+                                <label for="quantity" class="form-label">Quantity:</label>
+                                <input type="number" name="quantity" class="form-control" min="1" required>
+                            </div>
+                            <button type="submit" class="btn btn-primary w-100">Add to Order</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+        {% endif %}
+    </div>
+
+    {% if order_id %}
+    <div class="col-lg-4">
+        <div class="card shadow sticky-top" style="top: 20px;">
+            <div class="card-header bg-success text-white">
+                Current Items in Order #{{ order_id }}
+            </div>
+            <div class="card-body">
+                {% if items %}
+                <ul class="list-group list-group-flush">
+                    {% for item in items %}
+                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                        <div>
+                            <strong>{{ item.ItemName }}</strong><br>
+                            Qty: {{ item.Quantity }} × ${{ '%.2f' % item.PricePerUnit }} = ${{ '%.2f' % (item.Quantity * item.PricePerUnit) }}
+                        </div>
+                        <form method="POST" action="{{ url_for('remove_item', order_id=order_id) }}">
+                            <input type="hidden" name="item_num" value="{{ item.ItemNum }}">
+                            <button type="submit" class="btn btn-sm btn-outline-danger">Remove</button>
+                        </form>
+                    </li>
+                    {% endfor %}
+                </ul>
+                <div class="mt-3 text-end fs-5">
+                    <strong>Total: ${{ '%.2f' % total }}</strong>
+                </div>
+                <form method="POST" action="{{ url_for('confirm_order', order_id=order_id) }}">
+                    <button type="submit" class="btn btn-success w-100 mt-3">✅ Confirm Order</button>
+                </form>
+                {% else %}
+                <p class="text-muted">No items added yet.</p>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+    {% endif %}
+</div>
+{% endblock %}

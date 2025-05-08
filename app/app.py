@@ -1,7 +1,10 @@
 from flask import Flask, render_template
 import pymysql.cursors
+import os
+from dotenv import load_dotenv
 
 app = Flask(__name__)
+app.secret_key = '12345'
 
 def get_db():
     return pymysql.connect(
