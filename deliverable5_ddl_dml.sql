@@ -215,10 +215,6 @@ VALUES
   (5, 103, 2, 3.50),   -- Doohickey
   (5, 101, 1, 4.00);   -- Widget
   
-
-ALTER TABLE Orders MODIFY OrderID INT NOT NULL AUTO_INCREMENT;
-
-
 ALTER TABLE OrderDetails DROP FOREIGN KEY orderdetails_ibfk_1;
 
 
